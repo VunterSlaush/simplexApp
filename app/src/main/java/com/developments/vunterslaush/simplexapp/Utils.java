@@ -22,7 +22,7 @@ public class Utils
         return instance;
     }
 
-    public void addTextWatcher(final EditText editText, final String stringToChange)
+    public void addTextWatcher(final EditText editText)
     {
         TextWatcher textWatcher = new TextWatcher()
         {
@@ -41,18 +41,14 @@ public class Utils
             @Override
             public void afterTextChanged(Editable editable)
             {
-                if(stringToChange != null)
-                    stringToChange.replace(stringToChange,editable.toString());
-                Log.d("VUNTER","/--/> AfterTextChanger:"+stringToChange);
+
                 try
                 {
-                    Ecuacion e = new Ecuacion(editable.toString());
-
+                    new Ecuacion(editable.toString());
                     editText.setTextColor(Color.GREEN);
                 }
                 catch (EcuacionNoValida ecuacionNoValida)
                 {
-                    ecuacionNoValida.printStackTrace();
                     editText.setTextColor(Color.RED);
                 }
             }

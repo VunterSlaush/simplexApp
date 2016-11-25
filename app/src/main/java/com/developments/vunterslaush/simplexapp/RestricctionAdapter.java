@@ -2,6 +2,7 @@ package com.developments.vunterslaush.simplexapp;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -18,7 +19,8 @@ import java.util.ArrayList;
  */
 public class RestricctionAdapter extends RecyclerView.Adapter<RestricctionAdapter.ViewHolder>
 {
-
+    ArrayList <Editable> editables;
+    private ArrayList<String> restricciones;
     public static class ViewHolder extends RecyclerView.ViewHolder
     {
 
@@ -35,11 +37,11 @@ public class RestricctionAdapter extends RecyclerView.Adapter<RestricctionAdapte
     }
 
 
-    private ArrayList<String> restricciones;
 
     public RestricctionAdapter(ArrayList<String> restricciones)
     {
         this.restricciones = restricciones;
+        editables = new ArrayList<>();
     }
 
     @Override
@@ -62,18 +64,32 @@ public class RestricctionAdapter extends RecyclerView.Adapter<RestricctionAdapte
         {
             holder.textView.setText("R"+(position+1)+":");
             holder.restrictionEditTex.setText(restricciones.get(position));
-            Utils.getInstance().addTextWatcher(holder.restrictionEditTex,restricciones.get(position));
+            Utils.getInstance().addTextWatcher(holder.restrictionEditTex);
             holder.quitButton.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View view)
                 {
+
+                    editables.remove(holder.restrictionEditTex.getText());
                     restricciones.remove(holder.getAdapterPosition());
                     notifyItemRemoved(holder.getAdapterPosition());
+
                 }
             });
+            editables.add(position,holder.restrictionEditTex.getText());
 
         }
+    }
+
+    public ArrayList<String> getStringsOfTextFields()
+    {
+        ArrayList<String> strings = new ArrayList<>();
+        for (Editable editable: editables)
+        {
+            strings.add(editable.toString());
+        }
+        return  strings;
     }
 
     @Override

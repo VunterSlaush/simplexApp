@@ -324,7 +324,7 @@ public class Tabla
             //interfazResultado.asignarSolucion(solucionFactible());
             if(conSolucionesMultiples())
             {
-
+                throw new SinSolucionFactible("Tiene Multiples Soluciones!");
             }
             //interfazResultado.setVisible(true);
         }
@@ -582,7 +582,7 @@ public class Tabla
         return c;
     }
 
-    private String solucionFactible()
+    public String solucionFactible()
     {
         String solucion = "";
         Double valor = 0.0;
@@ -602,6 +602,10 @@ public class Tabla
         return solucion;
     }
 
+    public String getOperaciones()
+    {
+        return operaciones;
+    }
 }
 
 class SinSolucionFactible extends Exception

@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/*
+/**
   Clase Ecuacion: Clase Encargada de la Validacion, Transformacion y tratamiento
                   de las Entradas de Texto del Usuario, Es decir esta es la clase
                   que se encarga de convertir el texto plano que es ingresado a

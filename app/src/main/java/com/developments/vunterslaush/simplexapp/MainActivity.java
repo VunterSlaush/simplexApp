@@ -38,7 +38,7 @@ public class MainActivity extends Activity
         eraseAllButton = (Button)findViewById(R.id.eraseAllButton);
         restriccionesView = (RecyclerView)findViewById(R.id.restriccionesView);
 
-        Utils.getInstance().addTextWatcher(funcionObjetivoText,null);
+        Utils.getInstance().addTextWatcher(funcionObjetivoText);
 
         addRestriccion = (Button)findViewById(R.id.addRestriction);
         addRestriccion.setOnClickListener(new View.OnClickListener()
@@ -57,23 +57,31 @@ public class MainActivity extends Activity
             public void onClick(View view) {
                 restricciones.clear();
                 restricctionAdapter.notifyDataSetChanged();
-                funcionObjetivoText.setText("...");
+                funcionObjetivoText.setText("");
             }
         });
 
-        simplexButton.setOnClickListener(new View.OnClickListener() {
+        simplexButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View view)
             {
                 try
                 {
+                    Planteamiento p = new Planteamiento(funcionObjetivoText.getEditableText().toString(),
+                                                        restricctionAdapter.getStringsOfTextFields());
+                    Tabla tabla = new Tabla(p);
 
-                    Planteamiento p = new Planteamiento(funcionObjetivoText.getEditableText().toString(),restricciones);
                     Log.d("VUNTER",p.toString());
+                    Log.d("VUNTER","/--/> Solucion:"+tabla.solucionFactible());
+                    Log.d("VUNTER","/--/> Operaciones:"+tabla.getOperaciones());
                 }
                 catch (PlanteamientoNoValido planteamientoNoValido)
                 {
                     Log.e("VUNTER",planteamientoNoValido.toString());
+                } catch (SinSolucionFactible sinSolucionFactible)
+                {
+                    sinSolucionFactible.printStackTrace();
                 }
             }
         });
