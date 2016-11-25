@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -24,13 +25,13 @@ public class RestricctionAdapter extends RecyclerView.Adapter<RestricctionAdapte
     public static class ViewHolder extends RecyclerView.ViewHolder
     {
 
-        public Button quitButton;
+        public ImageButton quitButton;
         public EditText restrictionEditTex;
         public TextView textView;
         public ViewHolder(View v)
         {
             super(v);
-            quitButton = (Button) v.findViewById(R.id.quitRestrictionButton);
+            quitButton = (ImageButton) v.findViewById(R.id.quitRestrictionButton);
             restrictionEditTex = (EditText)v.findViewById(R.id.restriccionEditText);
             textView = (TextView)v.findViewById(R.id.restriccionTextView);
         }
@@ -63,7 +64,7 @@ public class RestricctionAdapter extends RecyclerView.Adapter<RestricctionAdapte
         if(position < restricciones.size())
         {
             holder.textView.setText("R"+(position+1)+":");
-            holder.restrictionEditTex.setText(restricciones.get(position));
+            holder.restrictionEditTex.requestFocus();
             Utils.getInstance().addTextWatcher(holder.restrictionEditTex);
             holder.quitButton.setOnClickListener(new View.OnClickListener()
             {

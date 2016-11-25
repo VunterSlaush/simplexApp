@@ -12,7 +12,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:orientation="vertical"
@@ -51,57 +54,36 @@
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:id="@+id/restriccionesView"
-                android:layout_height="150dp" />
+                android:layout_weight="0.6"
+                android:layout_height="250dp" />
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/buttonsLayout"
-                android:layout_weight="0.1">
+                android:orientation="horizontal"
+                android:layout_weight="0.2"
+                android:weightSum="1"
+                android:layout_height="45dp">
 
-                <LinearLayout
-                    android:orientation="horizontal"
+                <Button
+                    android:text="añadir Restriccion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/addRestriction" />
+
+                <Button
+                    android:text="Borrar Todo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5">
+                    android:id="@+id/eraseAllButton" />
 
-                    <Button
-                        android:text="añadir Restriccion"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/addRestriction"
-                        android:layout_weight="0.5"/>
-
-                    <Button
-                        android:text="Borrar Todo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/eraseAllButton"
-                        android:layout_weight="0.5" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5">
-
-                    <Button
-                        android:text="Simplex"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/simplexButton"
-                        android:layout_weight="0.5"/>
-
-                    <Button
-                        android:text="Dual Simplex"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/dualButton"
-                        android:layout_weight="0.5" />
-                </LinearLayout>
             </LinearLayout>
+
+            <Button
+                android:text="Simplex"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:id="@+id/simplexButton"
+                />
 
         </LinearLayout>
     </ScrollView>

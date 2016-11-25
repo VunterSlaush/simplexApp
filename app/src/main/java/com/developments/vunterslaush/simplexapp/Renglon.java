@@ -134,7 +134,7 @@ import java.util.ArrayList;
 
 
   fecha: Febrero 2016
-  @author Jesus Mota y Johans Cedeño
+  @author Jesus Mota
 */
 public class Renglon
 {
@@ -269,7 +269,4 @@ public class Renglon
             valoresPorColumna.set(i,aux);
         }
     }
-
-
-
 }

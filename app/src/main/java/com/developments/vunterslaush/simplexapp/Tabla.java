@@ -221,20 +221,25 @@ import java.util.Map;
  */
 public class Tabla
 {
+
+    static private Tabla instance;
     ArrayList<String> 	     formato;
     HashMap<String, Integer> variablesBasicas;
     Pivote<String, Integer>  pivote;
     Renglon 				 renglonCero;
     ArrayList<Renglon> 		 renglones;
+    ArrayList<SolutionStep>  steps;
     Planteamiento            planteamiento;
     String 					 operaciones;
 
+    
 
-    public Tabla(Planteamiento planteamiento) throws SinSolucionFactible
+    private Tabla(Planteamiento planteamiento) throws SinSolucionFactible
     {
         this.planteamiento = planteamiento;
         renglones = new ArrayList<Renglon>();
         variablesBasicas = new HashMap<String,Integer>();
+        steps = new ArrayList<>();
         generarFormato();
         generarRenglones();
         generarVariablesBasicas();
@@ -321,6 +326,7 @@ public class Tabla
 
 
             //interfazResultado.addTabla(modeloTablaActual());
+            generateStep();
             //interfazResultado.asignarSolucion(solucionFactible());
             if(conSolucionesMultiples())
             {
@@ -335,6 +341,11 @@ public class Tabla
         }
     }
 
+    private void generateStep()
+    {
+        steps.add(new SolutionStep(renglones,operaciones));
+    }
+
     private int simplexDual()  throws SinSolucionFactible
     {
         int iteraciones = 0;
@@ -344,6 +355,7 @@ public class Tabla
            // interfazResultado.addTabla(modeloTablaActual());
             buscarPivote();
             operar(iteraciones);
+            generateStep();
            // interfazResultado.addTexto(operaciones);
         }
         return iteraciones;
@@ -358,6 +370,7 @@ public class Tabla
             buscarPivoteS();
             operar(iteraciones);
             //interfazResultado.addTexto(operaciones);
+            generateStep();
         }
         return iteraciones;
     }

@@ -1,6 +1,7 @@
 package com.developments.vunterslaush.simplexapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ public class MainActivity extends Activity
     RecyclerView restriccionesView;
     ArrayList<String> restricciones;
     RestricctionAdapter restricctionAdapter;
+    RecyclerView.LayoutManager mLayoutManager;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -48,6 +50,8 @@ public class MainActivity extends Activity
             {
                 restricciones.add("");
                 restricctionAdapter.notifyItemInserted(restricciones.size());
+                restriccionesView.smoothScrollToPosition(restricciones.size());
+
             }
 
         });
@@ -74,7 +78,13 @@ public class MainActivity extends Activity
 
                     Log.d("VUNTER",p.toString());
                     Log.d("VUNTER","/--/> Solucion:"+tabla.solucionFactible());
-                    Log.d("VUNTER","/--/> Operaciones:"+tabla.getOperaciones());
+
+                    Intent intent = new Intent(MainActivity.this,TabsActivity.class);
+                    SolutionStep[] steps = SolutionStep.CREATOR.newArray(tabla.steps.size());
+                    for (int i = 0; i< tabla.steps.size(); i++)
+                        steps[i] = tabla.steps.get(i);
+                    intent.putExtra("steps",steps);
+                    startActivity(intent);
                 }
                 catch (PlanteamientoNoValido planteamientoNoValido)
                 {
@@ -88,7 +98,7 @@ public class MainActivity extends Activity
 
         restricciones = new ArrayList<>();
         restricctionAdapter = new RestricctionAdapter(restricciones);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        mLayoutManager = new LinearLayoutManager(getApplicationContext());
         restriccionesView.setLayoutManager(mLayoutManager);
         restriccionesView.setAdapter(restricctionAdapter);
     }
