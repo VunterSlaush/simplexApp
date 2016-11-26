@@ -22,6 +22,12 @@ public class RestricctionAdapter extends RecyclerView.Adapter<RestricctionAdapte
 {
     ArrayList <Editable> editables;
     private ArrayList<String> restricciones;
+
+    public void eraseAll()
+    {
+        editables.clear();
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder
     {
 

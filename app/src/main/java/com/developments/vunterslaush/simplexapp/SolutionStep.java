@@ -18,24 +18,20 @@ public class SolutionStep
 {
     List<Renglon> renglones;
     String operaciones;
-    public SolutionStep(List<Renglon> renglones, String operaciones)
+    int pRenglon;
+    String pVariable;
+    public SolutionStep(List<Renglon> renglones, String operaciones, Pivote<String, Integer> pivote)
     {
         this.renglones = new ArrayList<>();
         addRenglones(renglones);
-        this.operaciones = new String(operaciones);
+        if(operaciones != null)
+            this.operaciones = new String(operaciones);
+        else
+            this.operaciones = "Tabla Inicial";
+        pRenglon = pivote.getValue();
+        pVariable = pivote.getKey();
     }
 
-    public SolutionStep(Parcel in)
-    {
-        operaciones = in.readString();
-
-        Object[] objects =  in.readArray(Renglon.class.getClassLoader());
-        renglones = new ArrayList<>();
-        for (Object o: objects)
-        {
-            renglones.add((Renglon)o);
-        }
-    }
 
     private void addRenglones(List<Renglon> renglones)
     {

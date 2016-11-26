@@ -159,6 +159,16 @@ public class Renglon
         return formato;
     }
 
+    public ArrayList<String> retornarStringListOfValues()
+    {
+        ArrayList<String> strings = new ArrayList<>();
+        for (Double d: valoresPorColumna)
+        {
+            strings.add(Double.toString(d));
+        }
+        return strings;
+    }
+
     private void organizarValoresColumna(Ecuacion ec)
     {
         for (String str : formato )

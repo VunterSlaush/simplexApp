@@ -233,8 +233,14 @@ public class Tabla
     String 					 operaciones;
 
     
+    static public Tabla getInstance()
+    {
+        if(instance == null)
+            instance = new Tabla();
+        return instance;
+    }
 
-    private Tabla(Planteamiento planteamiento) throws SinSolucionFactible
+    public void resolver(Planteamiento planteamiento) throws SinSolucionFactible
     {
         this.planteamiento = planteamiento;
         renglones = new ArrayList<Renglon>();
@@ -326,6 +332,8 @@ public class Tabla
 
 
             //interfazResultado.addTabla(modeloTablaActual());
+            operaciones += solucionFactible();
+            steps.remove(steps.size()-1);
             generateStep();
             //interfazResultado.asignarSolucion(solucionFactible());
             if(conSolucionesMultiples())
@@ -343,7 +351,7 @@ public class Tabla
 
     private void generateStep()
     {
-        steps.add(new SolutionStep(renglones,operaciones));
+        steps.add(new SolutionStep(renglones,operaciones,pivote));
     }
 
     private int simplexDual()  throws SinSolucionFactible
@@ -354,8 +362,9 @@ public class Tabla
             iteraciones++;
            // interfazResultado.addTabla(modeloTablaActual());
             buscarPivote();
-            operar(iteraciones);
             generateStep();
+            operar(iteraciones);
+
            // interfazResultado.addTexto(operaciones);
         }
         return iteraciones;
@@ -368,9 +377,10 @@ public class Tabla
             iteraciones++;
             //interfazResultado.addTabla(modeloTablaActual());
             buscarPivoteS();
+            generateStep();
             operar(iteraciones);
             //interfazResultado.addTexto(operaciones);
-            generateStep();
+
         }
         return iteraciones;
     }
@@ -554,6 +564,11 @@ public class Tabla
             }
         }
         return columnaMenor;
+    }
+
+    public int positionAtFormato(String variable)
+    {
+        return formato.indexOf(variable);
     }
     private int renglonLDdivMin(String variable)
     {

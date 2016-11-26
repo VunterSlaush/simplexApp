@@ -15,12 +15,11 @@ public class TabsActivity extends FragmentActivity
 {
     TabsAdapter tabsAdapter;
     ViewPager mViewPager;
-    List<SolutionStep> steps;
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabs);
-        tabsAdapter = new TabsAdapter(getSupportFragmentManager(),steps);
+        tabsAdapter = new TabsAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(tabsAdapter);
     }
@@ -28,30 +27,22 @@ public class TabsActivity extends FragmentActivity
 
 class TabsAdapter extends FragmentStatePagerAdapter
 {
-    List<SolutionStep> steps;
-    public TabsAdapter(FragmentManager fm, List<SolutionStep> steps)
+    public TabsAdapter(FragmentManager fm)
     {
         super(fm);
-        this.steps = steps;
     }
 
     @Override
     public Fragment getItem(int i)
     {
-        Fragment fragment = new TabFragment();
-        Bundle args = new Bundle();
-        args.putParcelable("Step",steps.get(i));
-        fragment.setArguments(args);
+        Fragment fragment = TabFragment.newInstance(i);
         return fragment;
     }
 
     @Override
     public int getCount()
     {
-        return steps.size();
+        return Tabla.getInstance().steps.size();
     }
 }
-
-// Instances of this class are fragments representing a single
-// object in our collection.
 

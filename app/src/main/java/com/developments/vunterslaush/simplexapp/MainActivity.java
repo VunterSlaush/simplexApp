@@ -58,8 +58,10 @@ public class MainActivity extends Activity
 
         eraseAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 restricciones.clear();
+                restricctionAdapter.eraseAll();
                 restricctionAdapter.notifyDataSetChanged();
                 funcionObjetivoText.setText("");
             }
@@ -74,16 +76,12 @@ public class MainActivity extends Activity
                 {
                     Planteamiento p = new Planteamiento(funcionObjetivoText.getEditableText().toString(),
                                                         restricctionAdapter.getStringsOfTextFields());
-                    Tabla tabla = new Tabla(p);
-
+                    Tabla tabla = Tabla.getInstance();
+                    tabla.resolver(p);
                     Log.d("VUNTER",p.toString());
                     Log.d("VUNTER","/--/> Solucion:"+tabla.solucionFactible());
 
                     Intent intent = new Intent(MainActivity.this,TabsActivity.class);
-                    SolutionStep[] steps = SolutionStep.CREATOR.newArray(tabla.steps.size());
-                    for (int i = 0; i< tabla.steps.size(); i++)
-                        steps[i] = tabla.steps.get(i);
-                    intent.putExtra("steps",steps);
                     startActivity(intent);
                 }
                 catch (PlanteamientoNoValido planteamientoNoValido)
