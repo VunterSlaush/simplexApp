@@ -78,7 +78,7 @@ public class RestricctionAdapter extends RecyclerView.Adapter<RestricctionAdapte
                 public void onClick(View view)
                 {
 
-                    editables.remove(holder.restrictionEditTex.getText());
+                    editables.remove(holder.getAdapterPosition());
                     restricciones.remove(holder.getAdapterPosition());
                     notifyItemRemoved(holder.getAdapterPosition());
 

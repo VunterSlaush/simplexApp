@@ -231,7 +231,7 @@ public class Tabla
     ArrayList<SolutionStep>  steps;
     Planteamiento            planteamiento;
     String 					 operaciones;
-
+    SolutionStep             actualStep;//Actual Step
     
     static public Tabla getInstance()
     {
@@ -250,8 +250,15 @@ public class Tabla
         generarRenglones();
         generarVariablesBasicas();
         configurarRenglones();
-        //iniciarInterfaz();
+        createPlanteamientoStep();
         resolverPlanteamiento();
+    }
+
+    private void createPlanteamientoStep()
+    {
+        SolutionStep planteamientoStep = new SolutionStep();
+        planteamientoStep.setOperaciones(planteamiento.toString());
+        steps.add(planteamientoStep);
     }
 
     private void generarFormato()
@@ -309,17 +316,11 @@ public class Tabla
         }
     }
 
-    /*
-    private void iniciarInterfaz()
-    {
-        interfazResultado = new Resultado((formato.size()+2),(renglones.size()+1),padre);
-    }*/
 
 
     private void resolverPlanteamiento() throws SinSolucionFactible
     {
         //interfazResultado.addTexto(planteamiento.toString());
-
         int iteraciones = simplexDual();
 
         if(renglonCero.negativos() > 0)
@@ -329,18 +330,13 @@ public class Tabla
 
         if(iteraciones > 0 && renglonCero.negativos() == 0)
         {
-
-
-            //interfazResultado.addTabla(modeloTablaActual());
-            operaciones += solucionFactible();
-            steps.remove(steps.size()-1);
-            generateStep();
-            //interfazResultado.asignarSolucion(solucionFactible());
+            operaciones = solucionFactible();
             if(conSolucionesMultiples())
             {
                 throw new SinSolucionFactible("Tiene Multiples Soluciones!");
             }
-            //interfazResultado.setVisible(true);
+            createStep();
+            finishStep();
         }
         else
         {
@@ -349,9 +345,25 @@ public class Tabla
         }
     }
 
-    private void generateStep()
+    private void createStep()
     {
-        steps.add(new SolutionStep(renglones,operaciones,pivote));
+        this.actualStep = new SolutionStep();
+        actualStep.setRenglones(renglones);
+    }
+
+    private void finishStep()
+    {
+        if(operaciones!= null)
+            actualStep.setOperaciones(operaciones);
+        if(pivote != null)
+        {
+            actualStep.setpVariable(pivote.getKey());
+            actualStep.setpRenglon(pivote.getValue());
+        }
+
+        steps.add(actualStep);
+
+        actualStep = null;
     }
 
     private int simplexDual()  throws SinSolucionFactible
@@ -360,26 +372,26 @@ public class Tabla
         while(contarLDNegativos() != 0)
         {
             iteraciones++;
-           // interfazResultado.addTabla(modeloTablaActual());
+            createStep();
             buscarPivote();
-            generateStep();
             operar(iteraciones);
+            finishStep();
 
-           // interfazResultado.addTexto(operaciones);
         }
         return iteraciones;
     }
+
+
 
     private int simplex(int iteraciones) throws SinSolucionFactible
     {
         while(renglonCero.negativos() > 0)
         {
             iteraciones++;
-            //interfazResultado.addTabla(modeloTablaActual());
+            createStep();
             buscarPivoteS();
-            generateStep();
             operar(iteraciones);
-            //interfazResultado.addTexto(operaciones);
+            finishStep();
 
         }
         return iteraciones;

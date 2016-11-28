@@ -20,6 +20,15 @@ public class SolutionStep
     String operaciones;
     int pRenglon;
     String pVariable;
+
+
+    public SolutionStep()
+    {
+        renglones = new ArrayList<>();
+    }
+
+
+
     public SolutionStep(List<Renglon> renglones, String operaciones, Pivote<String, Integer> pivote)
     {
         this.renglones = new ArrayList<>();
@@ -44,6 +53,39 @@ public class SolutionStep
     public String toString()
     {
         return operaciones;
+    }
+
+    public List<Renglon> getRenglones() {
+        return renglones;
+    }
+
+    public void setRenglones(List<Renglon> renglones)
+    {
+        addRenglones(renglones);
+    }
+
+    public String getOperaciones() {
+        return operaciones;
+    }
+
+    public void setOperaciones(String operaciones) {
+        this.operaciones = operaciones;
+    }
+
+    public int getpRenglon() {
+        return pRenglon;
+    }
+
+    public void setpRenglon(int pRenglon) {
+        this.pRenglon = pRenglon;
+    }
+
+    public String getpVariable() {
+        return pVariable;
+    }
+
+    public void setpVariable(String pVariable) {
+        this.pVariable = pVariable;
     }
 
 }

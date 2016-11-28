@@ -59,8 +59,12 @@ public class TabFragment extends Fragment
         TextView operacion = (TextView)view.findViewById(R.id.operacionTextView);
         TableLayout table = (TableLayout)view.findViewById(R.id.tableLayoutTab);
         Log.d("VUNTER","/--/> Fragment onCreateView:"+stepPosition);
+
         title.setText("Paso:"+(stepPosition+1));
-        makeTable(table);
+
+        if(step.getRenglones() != null)
+            makeTable(table);
+
         operacion.setText(step.toString());
         return view;
 
@@ -113,7 +117,10 @@ public class TabFragment extends Fragment
 
     private View createTableHeader()
     {
-        return createRow(Tabla.getInstance().formato);
+        ArrayList<String> header = new ArrayList<>();
+        header.addAll(Tabla.getInstance().formato);
+        header.add(0,"R");
+        return createRow(header);
     }
 
     private View createTableRow(Renglon r)
@@ -127,7 +134,10 @@ public class TabFragment extends Fragment
         for (Object s :list)
         {
             TextView tv = new TextView(getContext());
-            tv.setText(s.toString());
+            if(s.toString().length() > 5)
+                tv.setText(s.toString().substring(0,5));
+            else
+                tv.setText(s.toString());
             row.addView(tv);
         }
         return row;
