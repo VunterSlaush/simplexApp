@@ -60,10 +60,16 @@ public class TabFragment extends Fragment
         TableLayout table = (TableLayout)view.findViewById(R.id.tableLayoutTab);
         Log.d("VUNTER","/--/> Fragment onCreateView:"+stepPosition);
 
-        title.setText("Paso:"+(stepPosition+1));
 
-        if(step.getRenglones() != null)
+
+        if(step.getRenglones().size() > 0 )
+        {
+            title.setText("Paso:"+(stepPosition));
             makeTable(table);
+        }
+        else
+            title.setText("");
+
 
         operacion.setText(step.toString());
         return view;
@@ -80,9 +86,9 @@ public class TabFragment extends Fragment
         {
             Renglon r = step.renglones.get(i);
             if(i == step.pRenglon)
-                table.addView(createTableRowHighlighted(r));
+                table.addView(createTableRowHighlighted(r,i));
             else
-                table.addView(createTableRow(r));
+                table.addView(createTableRow(r,i));
         }
 
         highlightColum(table,Tabla.getInstance().positionAtFormato(key));
@@ -104,9 +110,11 @@ public class TabFragment extends Fragment
         }
     }
 
-    private View createTableRowHighlighted(Renglon r)
+    private View createTableRowHighlighted(Renglon r, int c)
     {
-        TableRow v = (TableRow) createRow(r.retornarStringListOfValues());
+        ArrayList<String> row = r.retornarStringListOfValues();
+        row.add(0,Integer.toString(c));
+        TableRow v = (TableRow) createRow(row);
         for (int i =0; i<v.getChildCount(); i++)
         {
             TextView tv = (TextView) v.getChildAt(i);
@@ -123,9 +131,11 @@ public class TabFragment extends Fragment
         return createRow(header);
     }
 
-    private View createTableRow(Renglon r)
+    private View createTableRow(Renglon r, int i)
     {
-        return createRow(r.retornarStringListOfValues());
+        ArrayList<String> row = r.retornarStringListOfValues();
+        row.add(0,Integer.toString(i));
+        return createRow(row);
     }
 
     private View createRow(ArrayList<String> list)
