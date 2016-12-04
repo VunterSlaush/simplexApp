@@ -1,8 +1,6 @@
 package com.developments.vunterslaush.simplexapp;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -14,26 +12,29 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public class TabFragment extends Fragment
 {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String STEP_TAG = "step";
     SolutionStep step;
     int stepPosition;
+    boolean isLast;
+
     public TabFragment()
     {
         // Required empty public constructor
     }
 
 
-    public static TabFragment newInstance(int stepPosition)
+    public static TabFragment newInstance(int stepPosition, boolean isLast)
     {
         TabFragment fragment = new TabFragment();
         Bundle args = new Bundle();
         args.putInt(STEP_TAG, stepPosition);
+        args.putBoolean("Last",isLast);
         fragment.setArguments(args);
         return fragment;
     }
@@ -45,6 +46,7 @@ public class TabFragment extends Fragment
         if (getArguments() != null)
         {
             stepPosition = getArguments().getInt(STEP_TAG);
+            isLast = getArguments().getBoolean("Last",false);
             step = Tabla.getInstance().steps.get(stepPosition);
         }
     }
@@ -61,8 +63,13 @@ public class TabFragment extends Fragment
         Log.d("VUNTER","/--/> Fragment onCreateView:"+stepPosition);
 
 
-
-        if(step.getRenglones().size() > 0 )
+        if(isLast)
+        {
+            title.setText("Respuesta");
+            makeTable(table);
+            //add cuadrito de Solucion!
+        }
+        else if(step.getRenglones().size() > 0 )
         {
             title.setText("Paso:"+(stepPosition));
             makeTable(table);
@@ -91,7 +98,7 @@ public class TabFragment extends Fragment
                 table.addView(createTableRow(r,i));
         }
 
-        highlightColum(table,Tabla.getInstance().positionAtFormato(key));
+        highlightColum(table,Tabla.getInstance().positionAtFormato(key)+1);// Porque la R no esta en el formato!
     }
 
     /**
@@ -114,6 +121,7 @@ public class TabFragment extends Fragment
     {
         ArrayList<String> row = r.retornarStringListOfValues();
         row.add(0,Integer.toString(c));
+        row.add(getVariableBasica(c));
         TableRow v = (TableRow) createRow(row);
         for (int i =0; i<v.getChildCount(); i++)
         {
@@ -123,11 +131,16 @@ public class TabFragment extends Fragment
         return v;
     }
 
+    /**
+     * TODO Cambiar Textos Planos por Recursos Strings!
+     *
+     */
     private View createTableHeader()
     {
         ArrayList<String> header = new ArrayList<>();
         header.addAll(Tabla.getInstance().formato);
         header.add(0,"R");
+        header.add("VB");
         return createRow(header);
     }
 
@@ -135,7 +148,18 @@ public class TabFragment extends Fragment
     {
         ArrayList<String> row = r.retornarStringListOfValues();
         row.add(0,Integer.toString(i));
+        row.add(getVariableBasica(i));
         return createRow(row);
+    }
+
+    private String getVariableBasica(int i)
+    {
+        for (Map.Entry<String, Integer> m : step.variablesBasicas.entrySet())
+        {
+            if(m.getValue() == i)
+                return m.getKey();
+        }
+        return "";
     }
 
     private View createRow(ArrayList<String> list)

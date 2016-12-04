@@ -2,13 +2,9 @@ package com.developments.vunterslaush.simplexapp;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -16,15 +12,20 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by Samuel on 18/09/15
+ * Created by VunterSlaush !
  */
 public class RestricctionAdapter extends RecyclerView.Adapter<RestricctionAdapter.ViewHolder>
 {
-    ArrayList <Editable> editables;
+    ArrayList <EditText> editables;
     private ArrayList<String> restricciones;
 
     public void eraseAll()
     {
+        for (EditText et : editables)
+        {
+            et.setText("");
+        }
+        restricciones.clear();
         editables.clear();
     }
 
@@ -41,6 +42,7 @@ public class RestricctionAdapter extends RecyclerView.Adapter<RestricctionAdapte
             restrictionEditTex = (EditText)v.findViewById(R.id.restriccionEditText);
             textView = (TextView)v.findViewById(R.id.restriccionTextView);
         }
+
     }
 
 
@@ -77,14 +79,17 @@ public class RestricctionAdapter extends RecyclerView.Adapter<RestricctionAdapte
                 @Override
                 public void onClick(View view)
                 {
-
-                    editables.remove(holder.getAdapterPosition());
-                    restricciones.remove(holder.getAdapterPosition());
-                    notifyItemRemoved(holder.getAdapterPosition());
-
+                    holder.quitButton.setEnabled(false);
+                    int position = holder.getAdapterPosition();
+                    holder.restrictionEditTex.setText("");
+                    restricciones.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, restricciones.size());
                 }
             });
-            editables.add(position,holder.restrictionEditTex.getText());
+
+            holder.quitButton.setEnabled(true);
+            editables.add(position,holder.restrictionEditTex);
 
         }
     }
@@ -92,9 +97,9 @@ public class RestricctionAdapter extends RecyclerView.Adapter<RestricctionAdapte
     public ArrayList<String> getStringsOfTextFields()
     {
         ArrayList<String> strings = new ArrayList<>();
-        for (Editable editable: editables)
+        for (EditText editable: editables)
         {
-            strings.add(editable.toString());
+            strings.add(editable.getText().toString());
         }
         return  strings;
     }
@@ -102,10 +107,8 @@ public class RestricctionAdapter extends RecyclerView.Adapter<RestricctionAdapte
     @Override
     public int getItemCount()
     {
-
         if(restricciones != null)
         {
-
             return restricciones.size();
         }
         else
@@ -113,4 +116,6 @@ public class RestricctionAdapter extends RecyclerView.Adapter<RestricctionAdapte
             return 0;
         }
     }
+
+
 }

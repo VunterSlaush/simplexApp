@@ -74,7 +74,7 @@ class TabsAdapter extends FragmentStatePagerAdapter
     @Override
     public Fragment getItem(int i)
     {
-        Fragment fragment = TabFragment.newInstance(i);
+        Fragment fragment = TabFragment.newInstance(i, i+1 == Tabla.getInstance().steps.size());
         return fragment;
     }
 

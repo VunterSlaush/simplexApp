@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,6 +18,7 @@ import java.util.Objects;
 public class SolutionStep
 {
     List<Renglon> renglones;
+    HashMap<String, Integer> variablesBasicas;
     String operaciones;
     int pRenglon;
     String pVariable;
@@ -88,4 +90,7 @@ public class SolutionStep
         this.pVariable = pVariable;
     }
 
+    public void setVariablesBasicas(HashMap<String,Integer> variablesBasicas) {
+        this.variablesBasicas = new HashMap<>(variablesBasicas);
+    }
 }

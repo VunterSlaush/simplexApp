@@ -317,7 +317,10 @@ public class Tabla
     }
 
 
-
+    /**
+     * TODO Cambiar Textos Planos por Recursos String!
+     * @throws SinSolucionFactible
+     */
     private void resolverPlanteamiento() throws SinSolucionFactible
     {
         //interfazResultado.addTexto(planteamiento.toString());
@@ -349,6 +352,7 @@ public class Tabla
     {
         this.actualStep = new SolutionStep();
         actualStep.setRenglones(renglones);
+        actualStep.setVariablesBasicas(variablesBasicas);
     }
 
     private void finishStep()
