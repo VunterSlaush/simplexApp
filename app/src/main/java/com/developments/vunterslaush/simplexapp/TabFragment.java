@@ -20,6 +20,7 @@ public class TabFragment extends Fragment
 {
 
     private static final String STEP_TAG = "step";
+    private static final int NORMAL_LENGHT = 5;
     SolutionStep step;
     int stepPosition;
     boolean isLast;
@@ -188,12 +189,21 @@ public class TabFragment extends Fragment
         TableRow row = new TableRow(getContext());
         for (Object s :list)
         {
+            int extra = 0;
             TextView tv = Utils.getInstance().createTextViewStyled(getContext());
-            if(s.toString().length() > 5)
-                tv.setText(s.toString().substring(0,5));
-            else
-                tv.setText(s.toString());
-            tv.setPadding(0,10,0,10);
+            if(s.toString().length() > NORMAL_LENGHT)
+            {
+                extra = s.toString().length() - NORMAL_LENGHT;
+                float size = tv.getTextSize() - extra;
+                Log.d("VUNTERSLAUSH","size Resultado:"+size);
+                tv.setTextSize(size/2);
+                Log.d("VUNTERSLAUSH","size:"+tv.getTextSize());
+            }
+
+
+            tv.setText(s.toString());
+            int toPadding = extra - extra/2;
+            tv.setPadding(0,10+toPadding,0,10+toPadding);
             row.addView(tv);
         }
         TableLayout.LayoutParams pm=
@@ -210,7 +220,7 @@ public class TabFragment extends Fragment
         for (Object s :list)
         {
             TextView tv = Utils.getInstance().createTextViewStyled(getContext());
-            tv.setTextSize(20.0f);
+            tv.setTextSize(18.0f);
             tv.setTypeface(null, Typeface.BOLD);
             if(s.toString().length() > 5)
                 tv.setText(s.toString().substring(0,5));

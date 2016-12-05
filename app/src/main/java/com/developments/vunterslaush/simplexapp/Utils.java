@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.style.TextAppearanceSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -99,9 +100,7 @@ public class Utils
     public TextView createTextViewStyled(Context context)
     {
         TextView tv = new TextView(context);
-        tv.setEms(1);
-
-        tv.setTextAppearance(context, android.R.style.TextAppearance_Material_Medium);
+        tv.setTextAppearance(context, R.style.TableText);
         tv.setGravity(Gravity.LEFT);
 
         return tv;
