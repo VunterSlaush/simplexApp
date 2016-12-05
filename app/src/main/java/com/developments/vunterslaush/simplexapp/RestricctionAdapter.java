@@ -97,9 +97,9 @@ public class RestricctionAdapter extends RecyclerView.Adapter<RestricctionAdapte
     public ArrayList<String> getStringsOfTextFields()
     {
         ArrayList<String> strings = new ArrayList<>();
-        for (EditText editable: editables)
+        for (int i = 0; i<restricciones.size(); i++)
         {
-            strings.add(editable.getText().toString());
+            strings.add(editables.get(i).getText().toString());
         }
         return  strings;
     }

@@ -1,6 +1,7 @@
 package com.developments.vunterslaush.simplexapp;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -60,6 +61,8 @@ public class TabFragment extends Fragment
         TextView title = (TextView) view.findViewById(R.id.titleFragmentTab);
         TextView operacion = (TextView)view.findViewById(R.id.operacionTextView);
         TableLayout table = (TableLayout)view.findViewById(R.id.tableLayoutTab);
+        //table.setShrinkAllColumns(true);
+        table.setStretchAllColumns(true);
         Log.d("VUNTER","/--/> Fragment onCreateView:"+stepPosition);
 
 
@@ -87,6 +90,7 @@ public class TabFragment extends Fragment
     {
 
         table.addView(createTableHeader());
+        addLineToTable(table);
         String key = step.pVariable;
 
         for (int i = 0; i< step.renglones.size(); i++)
@@ -101,17 +105,34 @@ public class TabFragment extends Fragment
         highlightColum(table,Tabla.getInstance().positionAtFormato(key)+1);// Porque la R no esta en el formato!
     }
 
+    private void addLineToTable(TableLayout table)
+    {
+
+        TableRow row = new TableRow(getContext());
+        int n = Tabla.getInstance().formato.size() + 2;
+        for (int i=0; i<n; i++ )
+        {
+            View v = new View(getContext());
+            TableRow.LayoutParams pm = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1);
+            pm.setMargins(0,10,0,10);//Margenes!
+            v.setLayoutParams(pm);
+            v.setBackgroundColor(Color.parseColor("#bdbdbd"));
+            row.addView(v);
+        }
+        table.addView(row);
+    }
+
     /**
      * TODO a;adir highlight unico para el pivote exacto!
      */
     private void highlightColum(TableLayout table, int variable)
     {
-        for (int i = 1; i<table.getChildCount(); i++)
+        for (int i = 2; i<table.getChildCount(); i++)
         {
             TableRow row = (TableRow) table.getChildAt(i);
             TextView tv = (TextView) row.getChildAt(variable);
             if(tv != null)
-                tv.setBackgroundColor(Color.GREEN);
+                tv.setBackgroundColor(Color.WHITE);
             else
                 Log.d("VUNTER",i+"VS"+variable);
         }
@@ -126,7 +147,7 @@ public class TabFragment extends Fragment
         for (int i =0; i<v.getChildCount(); i++)
         {
             TextView tv = (TextView) v.getChildAt(i);
-            tv.setBackgroundColor(Color.GREEN);
+            tv.setBackgroundColor(Color.WHITE);
         }
         return v;
     }
@@ -141,7 +162,7 @@ public class TabFragment extends Fragment
         header.addAll(Tabla.getInstance().formato);
         header.add(0,"R");
         header.add("VB");
-        return createRow(header);
+        return createRowToHeader(header);
     }
 
     private View createTableRow(Renglon r, int i)
@@ -167,7 +188,30 @@ public class TabFragment extends Fragment
         TableRow row = new TableRow(getContext());
         for (Object s :list)
         {
-            TextView tv = new TextView(getContext());
+            TextView tv = Utils.getInstance().createTextViewStyled(getContext());
+            if(s.toString().length() > 5)
+                tv.setText(s.toString().substring(0,5));
+            else
+                tv.setText(s.toString());
+
+            row.addView(tv);
+        }
+        TableLayout.LayoutParams pm=
+                new TableLayout.LayoutParams
+                        (TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT);
+        pm.setMargins(0,5,0,20);
+        row.setLayoutParams(pm);
+        return row;
+    }
+
+    private View createRowToHeader(ArrayList<String> list)
+    {
+        TableRow row = new TableRow(getContext());
+        for (Object s :list)
+        {
+            TextView tv = Utils.getInstance().createTextViewStyled(getContext());
+            tv.setTextSize(20.0f);
+            tv.setTypeface(null, Typeface.BOLD);
             if(s.toString().length() > 5)
                 tv.setText(s.toString().substring(0,5));
             else

@@ -1,6 +1,7 @@
 package com.developments.vunterslaush.simplexapp;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -38,6 +39,20 @@ public class TabsActivity extends FragmentActivity
                     hideFixedButtons();
                 else
                     showFixedButtons();
+            }
+        });
+
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utils.getInstance().takeScreenshot(TabsActivity.this);
             }
         });
 
