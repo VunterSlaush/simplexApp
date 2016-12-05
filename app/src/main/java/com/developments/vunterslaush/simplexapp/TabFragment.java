@@ -96,13 +96,13 @@ public class TabFragment extends Fragment
         for (int i = 0; i< step.renglones.size(); i++)
         {
             Renglon r = step.renglones.get(i);
-            if(i == step.pRenglon)
+            if(i % 2 == 0)
                 table.addView(createTableRowHighlighted(r,i));
             else
                 table.addView(createTableRow(r,i));
         }
 
-        highlightColum(table,Tabla.getInstance().positionAtFormato(key)+1);// Porque la R no esta en el formato!
+        //highlightColum(table,Tabla.getInstance().positionAtFormato(key)+1);// Porque la R no esta en el formato!
     }
 
     private void addLineToTable(TableLayout table)
@@ -114,7 +114,7 @@ public class TabFragment extends Fragment
         {
             View v = new View(getContext());
             TableRow.LayoutParams pm = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1);
-            pm.setMargins(0,10,0,10);//Margenes!
+            pm.setMargins(0,10,0,0);//Margenes!
             v.setLayoutParams(pm);
             v.setBackgroundColor(Color.parseColor("#bdbdbd"));
             row.addView(v);
@@ -147,7 +147,7 @@ public class TabFragment extends Fragment
         for (int i =0; i<v.getChildCount(); i++)
         {
             TextView tv = (TextView) v.getChildAt(i);
-            tv.setBackgroundColor(Color.WHITE);
+            tv.setBackgroundColor(Color.parseColor("#b3e5fc"));
         }
         return v;
     }
@@ -193,13 +193,13 @@ public class TabFragment extends Fragment
                 tv.setText(s.toString().substring(0,5));
             else
                 tv.setText(s.toString());
-
+            tv.setPadding(0,10,0,10);
             row.addView(tv);
         }
         TableLayout.LayoutParams pm=
                 new TableLayout.LayoutParams
-                        (TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.MATCH_PARENT);
-        pm.setMargins(0,5,0,20);
+                        (TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.WRAP_CONTENT);
+
         row.setLayoutParams(pm);
         return row;
     }
