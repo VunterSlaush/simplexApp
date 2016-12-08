@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.style.TextAppearanceSpan;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.DecimalFormat;
 import java.util.Date;
 
 /**
@@ -53,16 +57,25 @@ public class Utils
             @Override
             public void afterTextChanged(Editable editable)
             {
-
                 try
                 {
-                    new Ecuacion(editable.toString());
-                    editText.setTextColor(Color.GREEN);
+                    if(!editable.toString().isEmpty())
+                    {
+                        new Ecuacion(editable.toString());
+                        editText.getBackground().setColorFilter(new
+                                PorterDuffColorFilter(Color.parseColor("#4caf50"), PorterDuff.Mode.MULTIPLY));
+                    }
+                    else
+                        editText.getBackground().setColorFilter(new
+                                PorterDuffColorFilter(Color.parseColor("#bdbdbd"), PorterDuff.Mode.MULTIPLY));
+
                 }
                 catch (EcuacionNoValida ecuacionNoValida)
                 {
-                    editText.setTextColor(Color.RED);
+                    editText.getBackground().setColorFilter(new
+                            PorterDuffColorFilter(Color.parseColor("#f44336"), PorterDuff.Mode.MULTIPLY));
                 }
+
             }
         };
         editText.addTextChangedListener(textWatcher);
@@ -102,7 +115,38 @@ public class Utils
         TextView tv = new TextView(context);
         tv.setTextAppearance(context, R.style.TableText);
         tv.setGravity(Gravity.LEFT);
-
         return tv;
     }
+
+    public String reduceNumber(String s)
+    {
+        double d = Double.valueOf(s);
+        Log.d("VUNTERSLAUSH", "/--/>"+getClass().getName()+" reduceNumber() Double:"+d);
+        if(d > 100000)
+        {
+            s = toCientificNotation(d);
+        }
+        else
+        {
+            s = truncateNumber(d);
+        }
+
+        return s;
+    }
+
+    private String toCientificNotation(double d)
+    {
+        return new DecimalFormat("0.#E0").format(d);
+    }
+
+    private String truncateNumber(double d)
+    {
+        return new DecimalFormat("#.##").format(d);
+    }
+
+    public float convertToDp(Context context, int dp)
+    {
+        return dp * context.getResources().getDisplayMetrics().density;
+    }
+
 }

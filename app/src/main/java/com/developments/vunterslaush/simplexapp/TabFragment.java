@@ -79,7 +79,7 @@ public class TabFragment extends Fragment
             makeTable(table);
         }
         else
-            title.setText("");
+            title.setText("Planteamiento del Problema!");
 
 
         operacion.setText(step.toString());
@@ -187,25 +187,18 @@ public class TabFragment extends Fragment
     private View createRow(ArrayList<String> list)
     {
         TableRow row = new TableRow(getContext());
-        for (Object s :list)
+        for (String s :list)
         {
-            int extra = 0;
             TextView tv = Utils.getInstance().createTextViewStyled(getContext());
-            if(s.toString().length() > NORMAL_LENGHT)
+            if(s.length() > NORMAL_LENGHT)
             {
-                extra = s.toString().length() - NORMAL_LENGHT;
-                float size = tv.getTextSize() - extra;
-                Log.d("VUNTERSLAUSH","size Resultado:"+size);
-                tv.setTextSize(size/2);
-                Log.d("VUNTERSLAUSH","size:"+tv.getTextSize());
+                s = Utils.getInstance().reduceNumber(s);
             }
-
-
-            tv.setText(s.toString());
-            int toPadding = extra - extra/2;
-            tv.setPadding(0,10+toPadding,0,10+toPadding);
+            tv.setText(s);
+            tv.setPadding(5,10,5,10);
             row.addView(tv);
         }
+
         TableLayout.LayoutParams pm=
                 new TableLayout.LayoutParams
                         (TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.WRAP_CONTENT);
@@ -220,12 +213,10 @@ public class TabFragment extends Fragment
         for (Object s :list)
         {
             TextView tv = Utils.getInstance().createTextViewStyled(getContext());
-            tv.setTextSize(18.0f);
+            tv.setTextSize(Utils.getInstance().convertToDp(getContext(),18));
             tv.setTypeface(null, Typeface.BOLD);
-            if(s.toString().length() > 5)
-                tv.setText(s.toString().substring(0,5));
-            else
-                tv.setText(s.toString());
+            tv.setText(s.toString());
+            tv.setPadding(0,0,5,3);
             row.addView(tv);
         }
         return row;

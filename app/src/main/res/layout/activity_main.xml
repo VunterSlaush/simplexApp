@@ -19,20 +19,18 @@
 
         <LinearLayout
             android:orientation="vertical"
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="1"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
+            android:weightSum="1">
 
             <TextView
                 android:text="Programacion Lineal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/title"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:layout_weight="0.05"/>
+                android:layout_weight="0.05"
+                style="@style/TitleStyle"/>
 
             <EditText
                 android:layout_width="match_parent"
@@ -41,48 +39,38 @@
                 android:hint="Funcion Objetivo Ej: Max Z =12x1 + 6/2x3"
                 android:ems="10"
                 android:id="@+id/editFuncionObjetivo"
-                android:layout_weight="0.05"/>
+                android:layout_weight="0.05"
+                style="@style/EditTextStyle" />
 
             <TextView
                 android:text="Restricciones"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView5"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:layout_weight="0.05"/>
+                android:layout_weight="0.05"
+                style="@style/TitleStyle"/>
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:id="@+id/restriccionesView"
-                android:layout_weight="0.6"
-                android:layout_height="250dp" />
+                android:layout_weight="0.4"
+                android:layout_marginBottom="10dp"
+                android:layout_height="170dp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_weight="0.2"
-                android:weightSum="1"
-                android:layout_height="45dp">
+            <Button
+                android:text="añadir Restriccion"
+                android:id="@+id/addRestriction"
+                style="@style/mainButton"/>
 
-                <Button
-                    android:text="añadir Restriccion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/addRestriction" />
-
-                <Button
-                    android:text="Borrar Todo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/eraseAllButton" />
-
-            </LinearLayout>
+            <Button
+                android:text="Borrar Todo"
+                android:id="@+id/eraseAllButton"
+                style="@style/mainButton"/>
 
             <Button
                 android:text="Simplex"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
                 android:id="@+id/simplexButton"
+                style="@style/mainButton"
                 />
 
         </LinearLayout>

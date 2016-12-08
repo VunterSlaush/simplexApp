@@ -24,13 +24,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/titleFragmentTab"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+                style="@style/TitleStyle"
+                />
 
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tableLayoutTab"
                 android:padding="5dp"
+                android:gravity="center"
                 >
 
             </TableLayout>

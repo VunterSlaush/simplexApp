@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -29,17 +30,30 @@ public class RestricctionAdapter extends RecyclerView.Adapter<RestricctionAdapte
         editables.clear();
     }
 
+    public void setErrorToConstraint(PlanteamientoNoValido error)
+    {
+        editables.get(error.getCampo() - 1).requestFocus();
+        editables.get(error.getCampo() - 1).setError(error.toString());
+    }
+
+    public void removeErrors()
+    {
+        for (EditText e : editables)
+            e.setError(null);
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder
     {
 
-        public ImageButton quitButton;
+        public Button quitButton;
         public EditText restrictionEditTex;
         public TextView textView;
         public ViewHolder(View v)
         {
             super(v);
-            quitButton = (ImageButton) v.findViewById(R.id.quitRestrictionButton);
+            quitButton = (Button) v.findViewById(R.id.quitRestrictionButton);
             restrictionEditTex = (EditText)v.findViewById(R.id.restriccionEditText);
+            restrictionEditTex.setError(null);
             textView = (TextView)v.findViewById(R.id.restriccionTextView);
         }
 
@@ -59,7 +73,6 @@ public class RestricctionAdapter extends RecyclerView.Adapter<RestricctionAdapte
 
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.restriccion_item, parent, false);
-
         return new ViewHolder(v);
     }
 

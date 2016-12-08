@@ -87,9 +87,10 @@ public class MainActivity extends Activity
                 catch (PlanteamientoNoValido planteamientoNoValido)
                 {
                     Log.e("VUNTER",planteamientoNoValido.toString());
+                    evaluarError(planteamientoNoValido);
                 } catch (SinSolucionFactible sinSolucionFactible)
                 {
-                    sinSolucionFactible.printStackTrace();
+                    funcionObjetivoText.setError(sinSolucionFactible.toString());
                 }
             }
         });
@@ -99,6 +100,28 @@ public class MainActivity extends Activity
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         restriccionesView.setLayoutManager(mLayoutManager);
         restriccionesView.setAdapter(restricctionAdapter);
+    }
+
+    private void evaluarError(PlanteamientoNoValido error)
+    {
+
+        borrarErroresPrevios();
+
+        if(error.getCampo() == 0)
+            funcionObjetivoText.setError(error.toString());
+        else
+            setErrorToConstraintN(error);
+    }
+
+    private void borrarErroresPrevios()
+    {
+        funcionObjetivoText.setError(null);
+        restricctionAdapter.removeErrors();
+    }
+
+    private void setErrorToConstraintN(PlanteamientoNoValido error)
+    {
+        restricctionAdapter.setErrorToConstraint(error);
     }
 
 }

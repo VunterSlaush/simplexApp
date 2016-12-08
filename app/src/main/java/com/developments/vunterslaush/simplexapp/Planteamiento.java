@@ -113,7 +113,7 @@ import java.util.logging.Logger;
   Fin de la Documentacion de la Clase Planteamiento.
 
   Fecha: Febrero 2016
-  @author Jesus Mota y Johans Cedeño
+  @author Jesus Mota
 */
 
 public class Planteamiento
@@ -135,20 +135,21 @@ public class Planteamiento
 
         Ecuacion ecuacionAuxiliar = null;
         String errorMessage = null;
-
+        int field = 0; //0 es F.O!
         try
         {
             funcionObj = new Ecuacion(fObjetivo);
         }
         catch (EcuacionNoValida ex)
         {
-            errorMessage = "Funcion Objetivo " + ex.toString();
+            errorMessage = ex.toString();
+            field = 0;
         }
 
         if(errorMessage != null)
-            throw new PlanteamientoNoValido(errorMessage);
+            throw new PlanteamientoNoValido(errorMessage,field);
         if(rest.isEmpty())
-            throw new PlanteamientoNoValido("NO HAy NINGUNA RESTRICCION!");
+            throw new PlanteamientoNoValido("NO HAY NINGUNA RESTRICCION!",0);
         for (int i=0; i< rest.size(); i++)
         {
             try
@@ -158,16 +159,17 @@ public class Planteamiento
             }
             catch(EcuacionNoValida error)
             {
-                errorMessage = "R"+(i+1)+":"+error.toString();
+                errorMessage = error.toString();
+                field = i+1;
                 break;
             }
             restricciones.add(ecuacionAuxiliar);
         }
 
         if(errorMessage != null)
-            throw new PlanteamientoNoValido(errorMessage);
+            throw new PlanteamientoNoValido(errorMessage,field);
         if(noSoloUnaFuncionObjetivo())
-            throw new PlanteamientoNoValido("Solo Puede Haber una funcion Objetivo");
+            throw new PlanteamientoNoValido("Solo Puede Haber una funcion Objetivo",0);
     }
 
     private Boolean noSoloUnaFuncionObjetivo()
@@ -185,8 +187,7 @@ public class Planteamiento
         for (int i=0; i<restricciones.size(); i++)
         {
             if(!compararVariables(funcionObj,restricciones.get(i).getVariables()))
-                throw new PlanteamientoNoValido("R"+(i+1)+": "+
-                        "Contiene Variables No usadas en la Funcion Objetivo");
+                throw new PlanteamientoNoValido("Contiene Variables No usadas en la Funcion Objetivo",i+1);
         }
     }
 
@@ -275,10 +276,12 @@ public class Planteamiento
 class PlanteamientoNoValido extends Exception
 {
     String errorMessage;
-    public PlanteamientoNoValido(String message)
+    int campo;
+    public PlanteamientoNoValido(String message, int campo)
     {
         super(message);
         errorMessage = message;
+        this.campo = campo;
     }
 
     @Override
@@ -286,4 +289,5 @@ class PlanteamientoNoValido extends Exception
     {
         return errorMessage;
     }
+    public int getCampo(){return campo;}
 }
