@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/simplex-master.iml" filepath="$PROJECT_DIR$/simplex-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/simplexApp.iml" filepath="$PROJECT_DIR$/simplexApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/unity-ads/unity-ads.iml" filepath="$PROJECT_DIR$/unity-ads/unity-ads.iml" />
     </modules>
   </component>
 </project>

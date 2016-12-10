@@ -9,13 +9,19 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
+
+import com.crashlytics.android.Crashlytics;
+import com.unity3d.ads.IUnityAdsListener;
+import com.unity3d.ads.UnityAds;
 
 import java.util.List;
 
 
-public class TabsActivity extends FragmentActivity
+public class TabsActivity extends FragmentActivity implements IUnityAdsListener
 {
+    private static final int MIN_SCROLLS_TO_SHOW_ADD = 8;
     TabsAdapter tabsAdapter;
     FloatingActionButton optionButton, btn1, btn2;
     ViewPager mViewPager;
@@ -29,6 +35,26 @@ public class TabsActivity extends FragmentActivity
         btn1 = (FloatingActionButton)findViewById(R.id.firstOption);
         btn2 = (FloatingActionButton)findViewById(R.id.floatingActionButton3);
         mViewPager.setAdapter(tabsAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener()
+        {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+            {
+
+            }
+
+            @Override
+            public void onPageSelected(int position)
+            {
+                if(Utils.getInstance().isApkSigned())
+                onScrollPage();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         hideFixedButtons();
 
         optionButton.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +84,21 @@ public class TabsActivity extends FragmentActivity
 
     }
 
+    private void onScrollPage()
+    {
+        Utils.getInstance().increaseSlides();
+        if(Utils.getInstance().getSlideCount() % MIN_SCROLLS_TO_SHOW_ADD == 0)
+        {
+            if(!UnityAds.isInitialized())
+                UnityAds.initialize(this,getString(R.string.unity_id),this);
+            else
+                UnityAds.show(this);
+        }
+
+        Crashlytics.log(Log.DEBUG,"VUNTER","/--/> "+getLocalClassName()+" onScrollPage() Slides:"+
+                Utils.getInstance().getSlideCount());
+    }
+
     private void hideFixedButtons()
     {
         runOnUiThread(new Runnable() {
@@ -76,7 +117,28 @@ public class TabsActivity extends FragmentActivity
     }
 
 
+    @Override
+    public void onUnityAdsReady(String s)
+    {
+        UnityAds.show(this);
+        Crashlytics.log(Log.DEBUG,"ADS","A Video Ad is Show Up!");
+    }
 
+    @Override
+    public void onUnityAdsStart(String s) {
+
+    }
+
+    @Override
+    public void onUnityAdsFinish(String s, UnityAds.FinishState finishState) {
+
+    }
+
+    @Override
+    public void onUnityAdsError(UnityAds.UnityAdsError unityAdsError, String s)
+    {
+
+    }
 }
 
 class TabsAdapter extends FragmentStatePagerAdapter

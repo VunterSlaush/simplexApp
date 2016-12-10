@@ -27,6 +27,17 @@ import java.util.Date;
  */
 public class Utils
 {
+    int slideCount = 0;
+
+    public int getSlideCount() {
+        return slideCount;
+    }
+
+    public void increaseSlides()
+    {
+        this.slideCount++;
+    }
+
     private static Utils instance;
 
 
@@ -149,4 +160,11 @@ public class Utils
         return dp * context.getResources().getDisplayMetrics().density;
     }
 
+    /**
+     * TODO THIS FUCKING METHOD!
+     * */
+    public boolean isApkSigned()
+    {
+        return false;
+    }
 }
