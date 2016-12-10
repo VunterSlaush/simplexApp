@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "334914549990",
+    "project_id": "firebase-simplexapp"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334914549990:android:6bbb2539c7e79a0f",
+        "android_client_info": {
+          "package_name": "com.developments.vunterslaush.simplexapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCx5oqdLSVofARzGEhrrGoLGdcA07JxV5Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-88809043-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

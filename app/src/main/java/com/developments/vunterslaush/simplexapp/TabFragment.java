@@ -12,6 +12,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -64,7 +66,7 @@ public class TabFragment extends Fragment
         TableLayout table = (TableLayout)view.findViewById(R.id.tableLayoutTab);
         //table.setShrinkAllColumns(true);
         table.setStretchAllColumns(true);
-        Log.d("VUNTER","/--/> Fragment onCreateView:"+stepPosition);
+        Crashlytics.log(Log.DEBUG,"VUNTER","/--/> Fragment onCreateView:"+stepPosition);
 
 
         if(isLast)
@@ -135,7 +137,7 @@ public class TabFragment extends Fragment
             if(tv != null)
                 tv.setBackgroundColor(Color.WHITE);
             else
-                Log.d("VUNTER",i+"VS"+variable);
+                Crashlytics.log(Log.DEBUG,"VUNTER",i+"VS"+variable);
         }
     }
 

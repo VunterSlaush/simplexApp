@@ -13,11 +13,17 @@ import android.text.method.KeyListener;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
-import java.util.ArrayList;
+
+import com.crashlytics.android.Crashlytics;
+
+
+import io.fabric.sdk.android.Fabric;
+
 
 public class MainActivity extends Activity
 {
@@ -26,19 +32,19 @@ public class MainActivity extends Activity
     Button simplexButton;
     Button addRestriccion;
     Button eraseAllButton;
-    RecyclerView restriccionesView;
-    ArrayList<String> restricciones;
-    RestricctionAdapter restricctionAdapter;
-    RecyclerView.LayoutManager mLayoutManager;
+    LinearLayout restriccionesView;
+    RestricctionManager restricctionAdapter = RestricctionManager.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
         funcionObjetivoText = (EditText)findViewById(R.id.editFuncionObjetivo);
         simplexButton = (Button)findViewById(R.id.simplexButton);
         eraseAllButton = (Button)findViewById(R.id.eraseAllButton);
-        restriccionesView = (RecyclerView)findViewById(R.id.restriccionesView);
+        restriccionesView = (LinearLayout)findViewById(R.id.restriccionesLayout);
 
         Utils.getInstance().addTextWatcher(funcionObjetivoText);
 
@@ -48,9 +54,11 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View view)
             {
-                restricciones.add("");
-                restricctionAdapter.notifyItemInserted(restricciones.size());
-                restriccionesView.smoothScrollToPosition(restricciones.size());
+                restricctionAdapter.inflateNewViewIntoLayout();
+                //restricctionAdapter.notifyItemInserted(restricciones.size());
+                //restricctionAdapter.notifyDataSetChanged();
+
+                //restriccionesView.smoothScrollToPosition(restricciones.size());
 
             }
 
@@ -60,9 +68,9 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View view)
             {
-                restricciones.clear();
+
                 restricctionAdapter.eraseAll();
-                restricctionAdapter.notifyDataSetChanged();
+                //restricctionAdapter.notifyDataSetChanged();
                 funcionObjetivoText.setText("");
             }
         });
@@ -78,15 +86,15 @@ public class MainActivity extends Activity
                                                         restricctionAdapter.getStringsOfTextFields());
                     Tabla tabla = Tabla.getInstance();
                     tabla.resolver(p);
-                    Log.d("VUNTER",p.toString());
-                    Log.d("VUNTER","/--/> Solucion:"+tabla.solucionFactible());
+                    Crashlytics.log(Log.DEBUG,"VUNTER",p.toString());
+                    Crashlytics.log(Log.DEBUG,"VUNTER","/--/> Solucion:"+tabla.solucionFactible());
 
                     Intent intent = new Intent(MainActivity.this,TabsActivity.class);
                     startActivity(intent);
                 }
                 catch (PlanteamientoNoValido planteamientoNoValido)
                 {
-                    Log.e("VUNTER",planteamientoNoValido.toString());
+                    Crashlytics.log(Log.DEBUG,"VUNTER",planteamientoNoValido.toString());
                     evaluarError(planteamientoNoValido);
                 } catch (SinSolucionFactible sinSolucionFactible)
                 {
@@ -95,20 +103,28 @@ public class MainActivity extends Activity
             }
         });
 
-        restricciones = new ArrayList<>();
-        restricctionAdapter = new RestricctionAdapter(restricciones);
-        mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        restriccionesView.setLayoutManager(mLayoutManager);
-        restriccionesView.setAdapter(restricctionAdapter);
+        restricctionAdapter.initManager(MainActivity.this, restriccionesView);
+
+        initAdd();
+
     }
+
+    private void initAdd()
+    {
+
+    }
+
 
     private void evaluarError(PlanteamientoNoValido error)
     {
 
         borrarErroresPrevios();
 
-        if(error.getCampo() == 0)
+        if(error.getCampo() == 0) {
+            funcionObjetivoText.requestFocus();
             funcionObjetivoText.setError(error.toString());
+
+        }
         else
             setErrorToConstraintN(error);
     }
