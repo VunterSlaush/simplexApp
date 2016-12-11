@@ -48,6 +48,7 @@ dependencies {
         transitive = true;
     }
     compile project(':unity-ads')
+    compile files('revmob.jar')
 }
 
 

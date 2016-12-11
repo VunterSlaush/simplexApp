@@ -11,17 +11,16 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.crashlytics.android.Crashlytics;
 import com.unity3d.ads.IUnityAdsListener;
 import com.unity3d.ads.UnityAds;
 
-import java.util.List;
-
 
 public class TabsActivity extends FragmentActivity implements IUnityAdsListener
 {
-    private static final int MIN_SCROLLS_TO_SHOW_ADD = 8;
+    private static final int MIN_SCROLLS_TO_SHOW_ADD = 15;
     TabsAdapter tabsAdapter;
     FloatingActionButton optionButton, btn1, btn2;
     ViewPager mViewPager;
@@ -34,6 +33,9 @@ public class TabsActivity extends FragmentActivity implements IUnityAdsListener
         optionButton = (FloatingActionButton)findViewById(R.id.floatingActionButton);
         btn1 = (FloatingActionButton)findViewById(R.id.firstOption);
         btn2 = (FloatingActionButton)findViewById(R.id.floatingActionButton3);
+
+        RevMobManager.getInstance().addBannerTo(this,(ViewGroup) findViewById(R.id.bannerLayoutTabs));
+
         mViewPager.setAdapter(tabsAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener()
         {
@@ -82,6 +84,7 @@ public class TabsActivity extends FragmentActivity implements IUnityAdsListener
             }
         });
 
+
     }
 
     private void onScrollPage()
@@ -116,10 +119,18 @@ public class TabsActivity extends FragmentActivity implements IUnityAdsListener
         btn2.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        RevMobManager.getInstance().addBannerTo(this,(ViewGroup) findViewById(R.id.bannerLayoutTabs));
+    }
 
     @Override
     public void onUnityAdsReady(String s)
     {
+
         UnityAds.show(this);
         Crashlytics.log(Log.DEBUG,"ADS","A Video Ad is Show Up!");
     }

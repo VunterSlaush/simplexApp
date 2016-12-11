@@ -16,12 +16,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TabsActivity">
+        <activity android:name=".TabsActivity"/>
+
+        <activity android:name="com.revmob.FullscreenActivity"
+            android:theme="@android:style/Theme.Translucent"
+            android:configChanges="keyboardHidden|orientation">
         </activity>
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="9a33b7705424990831c55eb0ed40a06083e415b0" />
+
     </application>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 

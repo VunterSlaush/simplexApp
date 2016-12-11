@@ -7,10 +7,18 @@
     tools:context="com.developments.vunterslaush.simplexapp.MainActivity">
 
 
-    <ScrollView
+    <LinearLayout android:id="@+id/bannerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/bannerLayout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -84,5 +92,6 @@
 
         </LinearLayout>
     </ScrollView>
+
 
 </RelativeLayout>

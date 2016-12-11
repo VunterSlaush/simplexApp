@@ -20,6 +20,9 @@ import android.widget.LinearLayout;
 
 
 import com.crashlytics.android.Crashlytics;
+import com.revmob.RevMob;
+import com.revmob.RevMobAdsListener;
+import com.revmob.ads.banner.RevMobBanner;
 
 
 import io.fabric.sdk.android.Fabric;
@@ -27,6 +30,10 @@ import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends Activity
 {
+    //Banners and Publicity Stuff!
+    RevMob revmob;
+    RevMobBanner banner;
+
 
     EditText funcionObjetivoText;
     Button simplexButton;
@@ -105,13 +112,15 @@ public class MainActivity extends Activity
 
         restricctionAdapter.initManager(MainActivity.this, restriccionesView);
 
-        initAdd();
-
     }
 
-    private void initAdd()
-    {
 
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        RevMobManager.getInstance().addBannerTo(this,(ViewGroup) findViewById(R.id.bannerLayout));
     }
 
 
