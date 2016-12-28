@@ -33,7 +33,7 @@ public class RestricctionManager
     private ArrayList <EditText> editables;
     private Context context;
     private LinearLayout layout;
-
+    private Context app;
 
     private static RestricctionManager instance;
 
@@ -52,6 +52,7 @@ public class RestricctionManager
         this.layout = layout;
         editables = new ArrayList<>();
         this.context = context;
+        app = MyApplication.getInstance();
     }
 
     /**
@@ -108,7 +109,7 @@ public class RestricctionManager
         Log.d("VUNTERSLAUSH","/--/> Nuevo HOLDER:"+viewCount);
 
         holder.setPos(viewCount);
-        holder.setText("R"+(viewCount+1));
+        holder.setText(app.getString(R.string.R)+(viewCount+1));
 
         holder.setOnClick(new View.OnClickListener()
         {
@@ -136,7 +137,7 @@ public class RestricctionManager
             View v = layout.getChildAt(i);
             ViewHolder holder = (ViewHolder) v.getTag();
             holder.setPos(i);
-            holder.setText("R"+(i+1));
+            holder.setText(app.getString(R.string.R)+(i+1));
         }
     }
 

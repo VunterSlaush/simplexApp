@@ -31,8 +31,7 @@ import io.fabric.sdk.android.Fabric;
 public class MainActivity extends Activity
 {
     //Banners and Publicity Stuff!
-    RevMob revmob;
-    RevMobBanner banner;
+
 
 
     EditText funcionObjetivoText;

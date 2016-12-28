@@ -1,5 +1,7 @@
 package com.developments.vunterslaush.simplexapp;
 
+import android.content.Context;
+
 import com.developments.vunterslaush.simplexapp.Ecuacion;
 
 import java.util.ArrayList;
@@ -120,13 +122,15 @@ public class Planteamiento
 {
     private Ecuacion funcionObj;
     private ArrayList<Ecuacion> restricciones;
+    private Context app;
 
     public Planteamiento(String funcionObjetivo, ArrayList<String> rest)
             throws PlanteamientoNoValido
     {
-        restricciones = new ArrayList<Ecuacion>();
+        restricciones = new ArrayList<>();
         convertirEnPlanteamiento(funcionObjetivo,rest);
         comprobarVariables();
+        app = MyApplication.getInstance();
     }
 
     private void convertirEnPlanteamiento(String fObjetivo, ArrayList<String> rest)
@@ -149,7 +153,7 @@ public class Planteamiento
         if(errorMessage != null)
             throw new PlanteamientoNoValido(errorMessage,field);
         if(rest.isEmpty())
-            throw new PlanteamientoNoValido("NO HAY NINGUNA RESTRICCION!",0);
+            throw new PlanteamientoNoValido(app.getString(R.string.no_restriccion),0);
         for (int i=0; i< rest.size(); i++)
         {
             try
@@ -169,7 +173,7 @@ public class Planteamiento
         if(errorMessage != null)
             throw new PlanteamientoNoValido(errorMessage,field);
         if(noSoloUnaFuncionObjetivo())
-            throw new PlanteamientoNoValido("Solo Puede Haber una funcion Objetivo",0);
+            throw new PlanteamientoNoValido(app.getString(R.string.error_una_fo),0);
     }
 
     private Boolean noSoloUnaFuncionObjetivo()
@@ -187,7 +191,7 @@ public class Planteamiento
         for (int i=0; i<restricciones.size(); i++)
         {
             if(!compararVariables(funcionObj,restricciones.get(i).getVariables()))
-                throw new PlanteamientoNoValido("Contiene Variables No usadas en la Funcion Objetivo",i+1);
+                throw new PlanteamientoNoValido(app.getString(R.string.error_variables_no_usadas),i+1);
         }
     }
 
@@ -213,21 +217,21 @@ public class Planteamiento
 
     public String toString()
     {
-        String toStrinReturn = "Tu Planteamiento es el Siguiente: \n\n";
+        String toStrinReturn = app.getString(R.string.tu_planteamiendo);
 
-        toStrinReturn += "Funcion Objetivo: "+ funcionObj.toString() + "\n\n";
-        toStrinReturn += "Sujeta a Las Siguientes Restricciones: \n\n";
+        toStrinReturn += app.getString(R.string.func_obj)+ funcionObj.toString() + "\n\n";
+        toStrinReturn += app.getString(R.string.sujeta_restricciones);
 
         for (int i = 0; i<restricciones.size() ;i++)
         {
-            toStrinReturn += "R"+(i+1)+":"+ restricciones.get(i).toString() + "\n\n";
+            toStrinReturn += app.getString(R.string.R)+(i+1)+":"+ restricciones.get(i).toString() + "\n\n";
         }
 
-        toStrinReturn += "Su Forma Estandar: \n\n";
+        toStrinReturn += app.getString(R.string.forma_estandar);
 
         for (int i = 0; i<restricciones.size() ;i++)
         {
-            toStrinReturn += "R"+(i+1)+":"+ restricciones.get(i).getEstandarString()+ "\n\n";
+            toStrinReturn += app.getString(R.string.R)+(i+1)+":"+ restricciones.get(i).getEstandarString()+ "\n\n";
         }
 
         return toStrinReturn;
@@ -275,9 +279,9 @@ public class Planteamiento
 // cada uno de los posibles errores que puede ocurrir en el planteamiento.
 class PlanteamientoNoValido extends Exception
 {
-    String errorMessage;
-    int campo;
-    public PlanteamientoNoValido(String message, int campo)
+    private String errorMessage;
+    private int campo;
+    PlanteamientoNoValido(String message, int campo)
     {
         super(message);
         errorMessage = message;

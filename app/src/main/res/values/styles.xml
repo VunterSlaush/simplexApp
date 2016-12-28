@@ -25,9 +25,11 @@
 
     <style name="mainButton">
         <item name="android:gravity">center</item>
-        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
         <item name="android:layout_width">230dp</item>
-        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:textColor">@drawable/button_text_color</item>
+        <item name="android:background">@drawable/button_selector</item>
     </style>
 
     <style name="TitleStyle" parent="TextAppearance.AppCompat">

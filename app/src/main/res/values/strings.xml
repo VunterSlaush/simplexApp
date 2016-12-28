@@ -1,12 +1,29 @@
 <resources>
-    <string name="app_name">Simplex App</string>
+    <string name="app_name" translatable="false">Simplex App</string>
     <string name="title_activity_tab_activty">TabActivty</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
-    <string name="banner_ad_unit_id">ca-app-pub-9353253866290602/3493079970</string>
-    <string name="unity_id">1229132</string>
+    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-9353253866290602/3493079970</string>
+    <string name="unity_id" translatable="false">1229132</string>
     <string name="revmob_id">584c9d7cdd97f97c58bb778c</string>
+    <string name="tu_planteamiendo">Tu Planteamiento es el Siguiente: \n\n</string>
+    <string name="error_una_fo">Solo Puede Haber una funcion Objetivo</string>
+    <string name="func_obj">Funcion Objetivo:</string>
+    <string name="sujeta_restricciones">Sujeta a Las Siguientes Restricciones: \n\n</string>
+    <string name="R">R</string>
+    <string name="forma_estandar">Su Forma Estandar: \n\n</string>
+    <string name="error_variables_no_usadas">Contiene Variables No usadas en la Funcion Objetivo</string>
+    <string name="no_restriccion">NO HAY NINGUNA RESTRICCION!</string>
+    <string name="tabla_inicial">Tabla Inicial</string>
+    <string name="respuesta">Respuesta</string>
+    <string name="paso">Paso:</string>
+    <string name="planteamiento">Planteamiento del Problema!</string>
+    <string name="vb">VB</string>
+    <string name="operaciones">"Operaciones "</string>
+    <string name="pivote">"Pivote: "</string>
+    <string name="variable">"Variable: "</string>
+    <string name="algoritmo_sin_solucion">El Algoritmo No tiene Solucion Factible</string>
 
 
 </resources>

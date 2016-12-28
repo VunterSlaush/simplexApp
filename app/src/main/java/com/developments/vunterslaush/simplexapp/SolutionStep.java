@@ -38,7 +38,7 @@ public class SolutionStep
         if(operaciones != null)
             this.operaciones = new String(operaciones);
         else
-            this.operaciones = "Tabla Inicial";
+            this.operaciones = MyApplication.getInstance().getString(R.string.tabla_inicial);
         pRenglon = pivote.getValue();
         pVariable = pivote.getKey();
     }

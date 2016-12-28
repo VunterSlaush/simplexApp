@@ -1,5 +1,7 @@
 package com.developments.vunterslaush.simplexapp;
 
+import android.content.Context;
+
 import com.developments.vunterslaush.simplexapp.Ecuacion;
 import com.developments.vunterslaush.simplexapp.Planteamiento;
 import com.developments.vunterslaush.simplexapp.Renglon;
@@ -232,7 +234,8 @@ public class Tabla
     Planteamiento            planteamiento;
     String 					 operaciones;
     SolutionStep             actualStep;//Actual Step
-    
+    private Context          app = MyApplication.getInstance();
+
     static public Tabla getInstance()
     {
         if(instance == null)
@@ -403,8 +406,8 @@ public class Tabla
 
     private void operar(int iteraciones)
     {
-        operaciones = "Operaciones "+iteraciones+" : \n\n";
-        operaciones += "Pivote: "+"[R"+ pivote.getValue()+", Variable: "+pivote.getKey()+"]\n\n";
+        operaciones = app.getString(R.string.operaciones)+iteraciones+" : \n\n";
+        operaciones += app.getString(R.string.pivote)+"["+app.getString(R.string.R)+ pivote.getValue()+","+app.getString(R.string.variable)+pivote.getKey()+"]\n\n";
         generarOperaciones();
         generarVariablesBasicas();
     }
@@ -452,7 +455,7 @@ public class Tabla
         Renglon renglonR = renglones.get(i);
         if(valorPivote != 1)
         {
-            operaciones += "R"+i+" = R"+i+"/"+valorPivote+"\n\n";
+            operaciones += app.getString(R.string.R)+i+" = "+app.getString(R.string.R)+i+"/"+valorPivote+"\n\n";
             renglonR = renglonR.dividirPor(valorPivote);
             renglones.set(i,renglonR);
         }
@@ -469,13 +472,13 @@ public class Tabla
             if(valor == 1)
             {
                 renglonR.restarRenglon(rPivote);
-                operaciones+= "R"+i+" = "+ "R"+i+" - "+"R"+pivote.getValue()+"\n\n";
+                operaciones+= app.getString(R.string.R)+i+" = "+ app.getString(R.string.R)+i+" - "+app.getString(R.string.R)+pivote.getValue()+"\n\n";
             }
             else
             {
                 renglonR.sumarRenglon(rPivote.multiplicarPor(-valor));
-                operaciones+= "R"+i+" = "+ "R"+i+" + "+
-                        "("+(-valor)+" * "+"R"+pivote.getValue()+")\n\n";
+                operaciones+= app.getString(R.string.R)+i+" = "+ app.getString(R.string.R)+i+" + "+
+                        "("+(-valor)+" * "+app.getString(R.string.R)+pivote.getValue()+")\n\n";
             }
         }
         if(i == 0)
@@ -509,7 +512,7 @@ public class Tabla
         int renglonMenor = buscarLDmenor();
         Renglon renglonPivote = renglones.get(renglonMenor);
         if(renglonPivote.negativos() == 0)
-            throw new SinSolucionFactible("El Algoritmo No tiene Solucion Factible");
+            throw new SinSolucionFactible(app.getString(R.string.algoritmo_sin_solucion));
 
         renglonCero = renglones.get(0);
 
@@ -559,7 +562,7 @@ public class Tabla
         String columnaPivote = buscarRceroMenor();
 
         if(contarColumnaNoValida(columnaPivote) == renglones.size()-1 )
-            throw new SinSolucionFactible("El Algoritmo No tiene Solucion Factible");
+            throw new SinSolucionFactible(app.getString(R.string.algoritmo_sin_solucion));
 
         int renglonPivote = renglonLDdivMin(columnaPivote);
         pivote = new Pivote<String, Integer>(columnaPivote, renglonPivote);

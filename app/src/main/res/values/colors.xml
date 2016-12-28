@@ -8,4 +8,6 @@
     <color name="white">#eee</color>
     <color name="green_good">#00897b</color>
     <color name="red_bad">#e53935</color>
+    <color name="light_blue">#64b5f6</color>
+    <color name="darken_red">#e53935</color>
 </resources>

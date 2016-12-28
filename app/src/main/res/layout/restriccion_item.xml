@@ -6,7 +6,6 @@
     android:padding="2dp">
 
     <TextView
-        android:text="TextView"
         android:gravity="center"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -21,14 +20,17 @@
         android:ems="10"
         android:id="@+id/restriccionEditText"
         style="@style/EditTextStyle"
-        android:layout_weight="60"
+        android:layout_weight="70"
          />
 
     <Button
-        android:text="X"
+        android:text="x"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/button_restricction"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
+        android:textColor="@drawable/button_text_color"
         android:id="@+id/quitRestrictionButton"
-        android:layout_weight="25" />
+        android:layout_weight="15" />
 
 </LinearLayout>

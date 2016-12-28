@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.developments.vunterslaush.simplexapp.MainActivity">
+    >
 
 
     <LinearLayout android:id="@+id/bannerLayout"
@@ -15,7 +15,7 @@
         android:layout_centerInParent="true"
         android:layout_alignParentTop="true"/>
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/bannerLayout"
@@ -29,7 +29,7 @@
             android:orientation="vertical"
             android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:weightSum="1">
 
             <TextView
@@ -58,7 +58,7 @@
                 android:layout_weight="0.05"
                 style="@style/TitleStyle"/>
 
-            <ScrollView
+            <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:id="@+id/restriccionesView"
                 android:verticalScrollbarPosition="defaultPosition"
@@ -72,7 +72,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:id="@+id/restriccionesLayout"/>
-            </ScrollView>
+            </android.support.v4.widget.NestedScrollView>
 
             <Button
                 android:text="añadir Restriccion"
@@ -91,7 +91,7 @@
                 />
 
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 
 </RelativeLayout>

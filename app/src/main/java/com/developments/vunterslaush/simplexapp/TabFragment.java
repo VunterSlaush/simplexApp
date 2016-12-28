@@ -71,17 +71,17 @@ public class TabFragment extends Fragment
 
         if(isLast)
         {
-            title.setText("Respuesta");
+            title.setText(R.string.respuesta);
             makeTable(table);
             //add cuadrito de Solucion!
         }
         else if(step.getRenglones().size() > 0 )
         {
-            title.setText("Paso:"+(stepPosition));
+            title.setText(getString(R.string.paso)+(stepPosition));
             makeTable(table);
         }
         else
-            title.setText("Planteamiento del Problema!");
+            title.setText(R.string.planteamiento);
 
 
         operacion.setText(step.toString());
@@ -163,8 +163,8 @@ public class TabFragment extends Fragment
     {
         ArrayList<String> header = new ArrayList<>();
         header.addAll(Tabla.getInstance().formato);
-        header.add(0,"R");
-        header.add("VB");
+        header.add(0,getString(R.string.R));
+        header.add(getString(R.string.vb));
         return createRowToHeader(header);
     }
 
